@@ -3,22 +3,27 @@ import java.util.LinkedList;
 public class A {
     static String codewordTrigram(String s) {
 
+        // declaretion
+        LinkedList<String> list = new LinkedList();
+        List trigram = new List();
+        int countMessages = 0, size = s.length(), max = 1, goal = 0, num = 0, column = 0, length,index;
+        Node i = trigram.head;
+        String[] Messages;
+        String sum = "" ,demo , word;
+
         // part 1 : count the number of messages and put All messages in Array
 
-        int countMessages = 0;
-        int size = s.length();
-        for (int i = 0; i < size; i++) {
-            if (s.charAt(i) == '.') {
+        for (int j = 0; j < size; j++) {
+            if (s.charAt(j) == '.') {
                 countMessages++;
             }
         }
 
-        String[] Messages = new String[countMessages];
+        Messages = new String[countMessages];
         for (int x = 0; x < countMessages; x++) {
             Messages[x] = "";
         }
 
-        int column = 0;
         for (int j = 0; j < size; j++) {
             if (s.charAt(j) != '.') {
 
@@ -32,31 +37,25 @@ public class A {
 
         // part 2
 
-        LinkedList<String> list = new LinkedList();
-        List trigram = new List();
-
         for (int top = 0; top < countMessages; top++) {
-            String demo = Messages[top];
-            String word = "";
+             demo = Messages[top];
+             word = "";
 
-            for (int i = 0; i < demo.length(); i++) {
-                if ((demo.charAt(i) == ' ' || demo.charAt(i) == '.') && !word.isEmpty()) {
+            for (int j = 0; j < demo.length(); j++) {
+                if ((demo.charAt(j) == ' ' || demo.charAt(j) == '.') && !word.isEmpty()) {
                     word = word.trim();
                     list.add(word);
                     word = "";
                     continue;
                 }
-                word += demo.charAt(i);
+                word += demo.charAt(j);
             }
 
-            int length = list.size();
-            int index;
-            String sum = "";
             // length - 2 : Because codewordTrigram = number of words - 2
-            for (int i = 0; i < length - 2; i++) {
-                index = i;
+            length = list.size();
+            for (int ii = 0; ii < length - 2; ii++) {
+                index = ii;
                 for (int j = 0; j < 3 && index < length; j++) {
-                    // System.out.print(list.get(index)+" ");
                     sum += list.get(index) + " ";
                     index++;
                 }
@@ -69,21 +68,15 @@ public class A {
             list.clear();
         }
 
+        // part 3
+        // System.out.println(trigram.toString());
 
-
-
-        // part 3 
-        System.out.println(trigram.toString());
-        int max = 1;
-        int goal = 0;
-        int num = 0;
-        Node i = trigram.head;
         while (i != null) {
             if (i.count > max) {
                 max = i.count;
                 goal = num;
             }
-            if(i.count == max){
+            if (i.count == max) {
                 max = 1;
                 goal = 0;
             }
@@ -91,8 +84,13 @@ public class A {
             num++;
             i = i.next;
         }
-        return trigram.get(goal);
+        return trigram.get(goal).toLowerCase();
     }
+
+
+
+
+
 
     static int countOf(List l, String d) {
 
@@ -112,35 +110,13 @@ public class A {
 
     public static void main(String[] args) {
 
-
         // put your text in S
-        String s = " I came from the moon. He went to the other room. She went to the drawing room. I came from.";
+        String s = "The plan is set. Set the plan now. The plan is on.";
         System.out.println(codewordTrigram(s));
 
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 class Node {
     Node next;
